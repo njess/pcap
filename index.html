@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PoNR Asset Management</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a1f;
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(#00ff9544 1px, transparent 1px),
+                            linear-gradient(90deg, #00ff9544 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        nav {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ff95;
+            background: rgba(10, 10, 31, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff95;
+            text-shadow: 0 0 10px #00ff95;
+            margin-bottom: 0.2rem;
+        }
+
+        .sublogo {
+            font-size: 0.7rem;
+            color: #00ff95;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            text-shadow: 0 0 5px #00ff95;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ff95;
+            text-shadow: 0 0 10px #00ff95;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: radial-gradient(circle at center, #1a1a3f 0%, #0a0a1f 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px #ff00ff;
+        }
+
+        .neon-text {
+            color: #00ff95;
+            text-shadow: 0 0 10px #00ff95;
+        }
+
+        .highlight-text {
+            display: inline-block;
+            font-size: 2.5rem;
+            margin: 1.5rem 0;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 149, 0.1));
+            border: 2px solid #00ff95;
+            border-radius: 10px;
+            color: #ff00ff;
+            text-shadow: 0 0 15px #ff00ff;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .custodian-text {
+            text-transform: uppercase;
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-agents {
+            display: inline-block;
+            font-size: 4rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px #ff00ff;
+            margin: 0.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #00ff95, 0 0 10px #00ff95, 0 0 15px #00ff95; }
+            50% { box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff; }
+            100% { box-shadow: 0 0 5px #00ff95, 0 0 10px #00ff95, 0 0 15px #00ff95; }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            margin-top: 2rem;
+            background: linear-gradient(45deg, #ff00ff, #00ff95);
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            background: rgba(10, 10, 31, 0.9);
+            border-top: 2px solid #00ff95;
+        }
+
+        .footer a {
+            color: #00ff95;
+            text-decoration: none;
+            transition: text-shadow 0.3s;
+        }
+
+        .footer a:hover {
+            text-shadow: 0 0 10px #00ff95;
+        }
+
+        .features {
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            background: rgba(10, 10, 31, 0.9);
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border: 2px solid #00ff95;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px #00ff95;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #00ff95;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .highlight-text {
+                font-size: 1.8rem;
+            }
+            
+            .ai-agents {
+                font-size: 2.2rem;
+            }
+
+            .custodian-text {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    
+    <nav>
+        <div class="logo-container">
+            <div class="logo">PoNR Asset Management</div>
+            <div class="sublogo">PROOF OF NO RUGGING</div>
+        </div>
+        <div class="nav-links">
+            <a href="mailto:future@ponrcap.com">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>BEYOND THE <span class="neon-text">POINT OF NO RETURN</span></h1>
+            <div class="highlight-text">
+                <span class="custodian-text">First of our kind: <br>asset manager & custodian of record for</span>
+                <span class="ai-agents">AI AGENTS</span>
+            </div>
+            <a href="mailto:future@ponrcap.com" class="cta-button floating-element">Initialize Your Future</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <a href="http://proofgroup.xyz" target="_blank">A Proof Group Production</a>
+    </footer>
+
+</body>
+</html>
